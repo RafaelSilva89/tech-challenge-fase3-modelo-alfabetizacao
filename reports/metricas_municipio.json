@@ -1,0 +1,115 @@
+{
+  "modelo_escolhido": "hist_gradient_boosting",
+  "comparacao_familias": {
+    "regressao_logistica": 0.7860694925456346,
+    "hist_gradient_boosting": 0.844675070344592
+  },
+  "features": [
+    "ctx_taxa",
+    "ctx_media_portugues",
+    "meta_2024",
+    "gap_projetado",
+    "n_alunos_avaliados",
+    "n_escolas",
+    "ibge_populacao",
+    "ibge_pib_per_capita",
+    "ibge_densidade_demografica",
+    "ibge_log_populacao",
+    "rede",
+    "regiao",
+    "sigla_uf"
+  ],
+  "holdout": {
+    "roc_auc": 0.8612874005016562,
+    "pr_auc": 0.8400847394481026,
+    "f1": 0.7520759193357058,
+    "recall_em_risco": 0.7577689243027889,
+    "brier": 0.15207762689964874,
+    "prevalencia": 0.46447076239822355,
+    "n_teste": 2702
+  },
+  "matriz_confusao": [
+    [
+      1124,
+      323
+    ],
+    [
+      304,
+      951
+    ]
+  ],
+  "importancias": [
+    {
+      "feature": "sigla_uf",
+      "queda_pr_auc": 0.28991823276372336,
+      "desvio": 0.00781421492770588
+    },
+    {
+      "feature": "meta_2024",
+      "queda_pr_auc": 0.1387203585784297,
+      "desvio": 0.0058008262278209655
+    },
+    {
+      "feature": "ctx_media_portugues",
+      "queda_pr_auc": 0.05561337766647254,
+      "desvio": 0.004075066245123728
+    },
+    {
+      "feature": "ibge_populacao",
+      "queda_pr_auc": 0.04526337570611264,
+      "desvio": 0.004224673623041918
+    },
+    {
+      "feature": "ibge_pib_per_capita",
+      "queda_pr_auc": 0.031009559363076745,
+      "desvio": 0.0018433563443640234
+    },
+    {
+      "feature": "ibge_densidade_demografica",
+      "queda_pr_auc": 0.030562300247377504,
+      "desvio": 0.003191600405746564
+    },
+    {
+      "feature": "gap_projetado",
+      "queda_pr_auc": 0.02574115590202921,
+      "desvio": 0.0038119267737183127
+    },
+    {
+      "feature": "ctx_taxa",
+      "queda_pr_auc": 0.01868736048911481,
+      "desvio": 0.0021786061423894063
+    },
+    {
+      "feature": "regiao",
+      "queda_pr_auc": 0.003931269507897128,
+      "desvio": 0.0005512989248659409
+    },
+    {
+      "feature": "n_alunos_avaliados",
+      "queda_pr_auc": 0.001955270647401852,
+      "desvio": 0.0010971757943882452
+    },
+    {
+      "feature": "n_escolas",
+      "queda_pr_auc": 0.0014581887486946998,
+      "desvio": 0.0007759627801131918
+    },
+    {
+      "feature": "ibge_log_populacao",
+      "queda_pr_auc": 0.0,
+      "desvio": 0.0
+    },
+    {
+      "feature": "rede",
+      "queda_pr_auc": -1.7215130023373602e-05,
+      "desvio": 0.0001686439185697506
+    }
+  ],
+  "distribuicao_risco": {
+    "critico": 2680,
+    "alto": 2408,
+    "moderado": 2464,
+    "baixo": 3254
+  },
+  "seed": 42
+}

@@ -1,0 +1,32 @@
+13:11:35 | INFO    | cache reaproveitado: ibge_municipios.parquet (5,571 municipios)
+13:11:35 | INFO    | ==================================================================
+13:11:35 | INFO    | BASE POR ALUNO — alvo 2024, contexto 2023
+13:13:09 | INFO    |    integridade OK: 1,851,852 linhas, igual ao fato de alunos
+13:13:22 | INFO    |    gravado: base_analitica_alunos.parquet (30.9 MB)
+13:13:23 | INFO    |    alvo: 40.22% nao alfabetizados | 5,517 municipios | 42,328 escolas
+13:13:23 | INFO    |    cobertura do contexto: municipal 98.14% | UF 98.25% | IBGE 100.0%
+13:13:26 | INFO    |    gravado: base_analitica_alunos_amostra.parquet (50,169 linhas, versionada)
+13:13:37 | INFO    |    diagnostico de nulos (~3% da base): 55,610 linhas x 32 colunas
+13:13:37 | INFO    |      mun_meta_2024                          4.59% nulos
+13:13:37 | INFO    |      mun_gap_projetado                      4.59% nulos
+13:13:37 | INFO    |      mun_ctx_percentual_participacao        3.80% nulos
+13:13:37 | INFO    |      mun_meta_2030                          3.80% nulos
+13:13:29 | INFO    |      mun_ctx_nivel_alfabetizacao            3.80% nulos
+13:13:29 | INFO    |      mun_esforco_anual_requerido            3.80% nulos
+13:13:29 | INFO    |      mun_ctx_taxa_alfabetizacao             1.86% nulos
+13:13:29 | INFO    |      mun_ctx_media_portugues                1.86% nulos
+13:13:29 | INFO    |      uf_ctx_taxa_alfabetizacao              1.75% nulos
+13:13:29 | INFO    |      uf_ctx_media_portugues                 1.75% nulos
+13:13:29 | INFO    |      uf_ctx_ranking_nacional                1.75% nulos
+13:13:29 | INFO    |      uf_meta_2030                           1.75% nulos
+13:13:29 | INFO    |      ibge_densidade_demografica             0.04% nulos
+13:13:29 | INFO    | ==================================================================
+13:13:29 | INFO    | BASE MUNICIPAL — risco de nao atingir a meta de 2024
+13:13:47 | INFO    |    base_municipal.parquet: 10,806 linhas x 22 colunas
+13:13:47 | INFO    |      n_alunos_avaliados                    43.39% nulos
+13:13:47 | INFO    |      n_escolas                             43.39% nulos
+13:13:47 | INFO    |      ibge_densidade_demografica             0.08% nulos
+13:13:47 | INFO    |    alvo: 46.45% nao atingiram a meta
+13:13:47 | INFO    |    redes: {'municipal': 5232, 'publica': 4689, 'estadual': 885}
+13:13:47 | INFO    | ==================================================================
+13:13:47 | INFO    | base analitica construida

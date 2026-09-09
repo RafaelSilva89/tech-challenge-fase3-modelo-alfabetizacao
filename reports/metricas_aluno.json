@@ -1,0 +1,220 @@
+{
+  "modelo_escolhido": "hist_gradient_boosting",
+  "hiperparametros": {
+    "categorical_features": "warn",
+    "class_weight": "balanced",
+    "early_stopping": "auto",
+    "interaction_cst": null,
+    "l2_regularization": 0.0,
+    "learning_rate": 0.03,
+    "loss": "log_loss",
+    "max_bins": 255,
+    "max_depth": null,
+    "max_features": 1.0,
+    "max_iter": 400,
+    "max_leaf_nodes": 31,
+    "min_samples_leaf": 20,
+    "monotonic_cst": null,
+    "n_iter_no_change": 10,
+    "random_state": 42,
+    "scoring": "loss",
+    "tol": 1e-07,
+    "validation_fraction": 0.1,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "n_treino": 480000,
+  "n_teste": 120000,
+  "features": [
+    "peso_aluno",
+    "mun_ctx_taxa_alfabetizacao",
+    "mun_ctx_media_portugues",
+    "mun_meta_2024",
+    "mun_gap_projetado",
+    "uf_ctx_taxa_alfabetizacao",
+    "uf_ctx_media_portugues",
+    "uf_ctx_ranking_nacional",
+    "escola_n_alunos_avaliados",
+    "mun_n_alunos_avaliados",
+    "mun_n_escolas",
+    "ibge_populacao",
+    "ibge_pib_per_capita",
+    "ibge_densidade_demografica",
+    "ibge_log_populacao",
+    "rede",
+    "serie",
+    "caderno",
+    "regiao",
+    "sigla_uf",
+    "id_municipio",
+    "id_escola"
+  ],
+  "comparacao_familias": [
+    {
+      "modelo": "hist_gradient_boosting",
+      "pr_auc_medio": 0.5651615206967299,
+      "desvio": 0.0024678233641269483,
+      "segundos": 60.90262317657471
+    },
+    {
+      "modelo": "lightgbm",
+      "pr_auc_medio": 0.5650617807050553,
+      "desvio": 0.0018579167109050493,
+      "segundos": 40.552780628204346
+    },
+    {
+      "modelo": "regressao_logistica",
+      "pr_auc_medio": 0.5631918916666151,
+      "desvio": 0.0022217819236930152,
+      "segundos": 26.657339572906494
+    },
+    {
+      "modelo": "baseline_maioria",
+      "pr_auc_medio": 0.40072,
+      "desvio": 0.0,
+      "segundos": 36.30167531967163
+    }
+  ],
+  "holdout_aleatorio": {
+    "roc_auc": 0.6985763039903957,
+    "pr_auc": 0.5899228101857081,
+    "f1": 0.5982205615774481,
+    "recall_nao_alfabetizado": 0.6709611833779382,
+    "brier": 0.22011175948518308,
+    "prevalencia": 0.401675,
+    "n": 120000,
+    "limiar_otimo_f1": 0.3865090171485696,
+    "f1_no_limiar_otimo": 0.6190100131124091
+  },
+  "holdout_por_municipio": {
+    "roc_auc": 0.669811666065625,
+    "pr_auc": 0.5455987755012854,
+    "f1": 0.5567136950762264,
+    "recall_nao_alfabetizado": 0.6006844843617084,
+    "brier": 0.23469015322482448,
+    "prevalencia": 0.391237045579437,
+    "n": 129203
+  },
+  "teste_anti_leakage_com_proficiencia": {
+    "roc_auc": 0.9999930940495653,
+    "pr_auc": 0.9999897478999494,
+    "f1": 0.9979765697149557,
+    "recall_nao_alfabetizado": 0.9976556502977116,
+    "brier": 0.0010176255370642011,
+    "prevalencia": 0.401675,
+    "n": 120000
+  },
+  "matriz_confusao": [
+    [
+      44217,
+      27582
+    ],
+    [
+      15860,
+      32341
+    ]
+  ],
+  "top_features_permutacao": [
+    {
+      "feature": "id_escola",
+      "queda_pr_auc": 0.07234429290170241,
+      "desvio": 0.0031082709203603125
+    },
+    {
+      "feature": "id_municipio",
+      "queda_pr_auc": 0.012953259580764164,
+      "desvio": 0.001844768057582804
+    },
+    {
+      "feature": "mun_ctx_media_portugues",
+      "queda_pr_auc": 0.002653381722922843,
+      "desvio": 0.0009684732929626584
+    },
+    {
+      "feature": "sigla_uf",
+      "queda_pr_auc": 0.0020549560670670487,
+      "desvio": 0.00023482176017286158
+    },
+    {
+      "feature": "mun_ctx_taxa_alfabetizacao",
+      "queda_pr_auc": 0.0019543672982579975,
+      "desvio": 0.0008050460477313792
+    },
+    {
+      "feature": "uf_ctx_media_portugues",
+      "queda_pr_auc": 0.001359397458554179,
+      "desvio": 0.0007385427726977438
+    },
+    {
+      "feature": "escola_n_alunos_avaliados",
+      "queda_pr_auc": 0.0012714628973706787,
+      "desvio": 0.00020535311986691644
+    },
+    {
+      "feature": "peso_aluno",
+      "queda_pr_auc": 0.0010700079918603,
+      "desvio": 0.00024160753427377574
+    },
+    {
+      "feature": "ibge_densidade_demografica",
+      "queda_pr_auc": 0.0008515000388612081,
+      "desvio": 0.00017611441618442723
+    },
+    {
+      "feature": "ibge_pib_per_capita",
+      "queda_pr_auc": 0.0007691076441986855,
+      "desvio": 0.0003742072820858736
+    },
+    {
+      "feature": "uf_ctx_taxa_alfabetizacao",
+      "queda_pr_auc": 0.0007673631985928742,
+      "desvio": 0.0002636398869962006
+    },
+    {
+      "feature": "caderno",
+      "queda_pr_auc": 0.0005536140351067642,
+      "desvio": 0.0002462758542365363
+    },
+    {
+      "feature": "ibge_populacao",
+      "queda_pr_auc": 0.0003592129774231623,
+      "desvio": 0.000232897868323132
+    },
+    {
+      "feature": "mun_gap_projetado",
+      "queda_pr_auc": 0.00029743984116699097,
+      "desvio": 0.0002572280519689693
+    },
+    {
+      "feature": "regiao",
+      "queda_pr_auc": 0.0001606599641643447,
+      "desvio": 0.00021485193060047388
+    },
+    {
+      "feature": "mun_n_escolas",
+      "queda_pr_auc": 9.849126982408585e-05,
+      "desvio": 0.0001329438240795919
+    },
+    {
+      "feature": "mun_n_alunos_avaliados",
+      "queda_pr_auc": 6.98011186858194e-05,
+      "desvio": 0.0002850995081652093
+    },
+    {
+      "feature": "ibge_log_populacao",
+      "queda_pr_auc": 6.668517277508279e-06,
+      "desvio": 7.916310666709826e-06
+    },
+    {
+      "feature": "uf_ctx_ranking_nacional",
+      "queda_pr_auc": 4.597528361660608e-06,
+      "desvio": 1.7677566598166887e-05
+    },
+    {
+      "feature": "serie",
+      "queda_pr_auc": 0.0,
+      "desvio": 0.0
+    }
+  ],
+  "seed": 42
+}

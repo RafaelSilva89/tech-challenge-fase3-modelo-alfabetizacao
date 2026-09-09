@@ -1,0 +1,82 @@
+13:14:04 | INFO    | ==========================================================================
+13:14:04 | INFO    | MODELO POR ALUNO — alvo: nao alfabetizado
+13:14:49 | INFO    | base carregada: 600,000 linhas | 40.17% da classe positiva (nao alfabetizado)
+13:14:51 | INFO    |    treino=480,000 | teste=120,000 | prevalencia treino=0.4017 teste=0.4017
+13:14:52 | INFO    | ==========================================================================
+13:14:52 | INFO    | 1. COMPARACAO DE FAMILIAS (CV 3-fold, 150,000 linhas, metrica PR-AUC)
+13:15:28 | INFO    |    baseline_maioria             PR-AUC=0.4007 (+/-0.0000) | 36s
+/home/rafael/.venvs/fase3/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:455: OptimizeWarning: Unknown solver options: iprint
+  opt_res = optimize.minimize(
+/home/rafael/.venvs/fase3/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:455: OptimizeWarning: Unknown solver options: iprint
+  opt_res = optimize.minimize(
+/home/rafael/.venvs/fase3/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:455: OptimizeWarning: Unknown solver options: iprint
+  opt_res = optimize.minimize(
+13:15:55 | INFO    |    regressao_logistica          PR-AUC=0.5632 (+/-0.0022) | 27s
+13:16:55 | INFO    |    hist_gradient_boosting       PR-AUC=0.5652 (+/-0.0025) | 61s
+13:17:36 | INFO    |    lightgbm                     PR-AUC=0.5651 (+/-0.0019) | 41s
+13:17:36 | INFO    |    vencedor: hist_gradient_boosting
+13:17:36 | INFO    | ==========================================================================
+13:17:36 | INFO    | 2. BUSCA DE HIPERPARAMETROS — hist_gradient_boosting
+13:45:00 | INFO    |    melhor PR-AUC na CV: 0.5661 (1644s)
+13:45:00 | INFO    |      l2_regularization      0.0
+13:45:00 | INFO    |      learning_rate          0.03
+13:45:00 | INFO    |      max_iter               400
+13:45:00 | INFO    |      max_leaf_nodes         31
+13:45:00 | INFO    |      min_samples_leaf       20
+13:45:00 | INFO    | ==========================================================================
+13:45:00 | INFO    | 3. AJUSTE FINAL E AVALIACAO (480,000 linhas de treino)
+13:50:01 | INFO    |    ajustado em 301s
+13:51:06 | INFO    |    holdout_aleatorio            ROC-AUC=0.6986 | PR-AUC=0.5899 | F1=0.5982 | recall=0.6710 | Brier=0.2201
+13:52:04 | INFO    |    limiar otimo de F1: 0.387 (F1=0.6190, contra 0.5982 no corte 0,5)
+13:52:04 | INFO    |    matriz de confusao [[VN FP][FN VP]]: [[44217, 27582], [15860, 32341]]
+13:52:05 | INFO    | 
+                  precision    recall  f1-score   support
+
+    alfabetizado     0.7360    0.6158    0.6706     71799
+nao alfabetizado     0.5397    0.6710    0.5982     48201
+
+        accuracy                         0.6380    120000
+       macro avg     0.6379    0.6434    0.6344    120000
+    weighted avg     0.6572    0.6380    0.6415    120000
+
+13:52:05 | INFO    |    estresse de generalizacao geografica (municipios inteiros fora do treino)
+14:01:27 | INFO    |    holdout_por_municipio        ROC-AUC=0.6698 | PR-AUC=0.5456 | F1=0.5567 | recall=0.6007 | Brier=0.2347
+14:01:28 | INFO    | ==========================================================================
+14:01:28 | INFO    | 4. TESTE ANTI-LEAKAGE (reintroduzindo 'proficiencia')
+14:03:27 | INFO    |    com_proficiencia             ROC-AUC=1.0000 | PR-AUC=1.0000 | F1=0.9980 | recall=0.9977 | Brier=0.0010
+14:03:27 | INFO    |    ROC-AUC proximo de 1,0 confirma que 'proficiencia' determina o alvo
+14:03:27 | INFO    |    (alfabetizado := proficiencia >= 743) — por isso ela e as medias
+14:03:27 | INFO    |    municipais do mesmo ano ficam fora do modelo de producao.
+14:03:27 | INFO    | ==========================================================================
+14:03:27 | INFO    | 5. INTERPRETABILIDADE
+14:14:10 | INFO    |    permutation importance (top 12, queda de PR-AUC ao embaralhar):
+14:14:10 | INFO    |      id_escola                            +0.07234 (+/-0.00311)
+14:14:10 | INFO    |      id_municipio                         +0.01295 (+/-0.00184)
+14:14:10 | INFO    |      mun_ctx_media_portugues              +0.00265 (+/-0.00097)
+14:14:10 | INFO    |      sigla_uf                             +0.00205 (+/-0.00023)
+14:14:10 | INFO    |      mun_ctx_taxa_alfabetizacao           +0.00195 (+/-0.00081)
+14:14:10 | INFO    |      uf_ctx_media_portugues               +0.00136 (+/-0.00074)
+14:14:10 | INFO    |      escola_n_alunos_avaliados            +0.00127 (+/-0.00021)
+14:14:10 | INFO    |      peso_aluno                           +0.00107 (+/-0.00024)
+14:14:10 | INFO    |      ibge_densidade_demografica           +0.00085 (+/-0.00018)
+14:14:10 | INFO    |      ibge_pib_per_capita                  +0.00077 (+/-0.00037)
+14:14:10 | INFO    |      uf_ctx_taxa_alfabetizacao            +0.00077 (+/-0.00026)
+14:14:10 | INFO    |      caderno                              +0.00055 (+/-0.00025)
+14:19:32 | INFO    |    graficos SHAP salvos em images/
+14:19:32 | INFO    |    top 10 por |SHAP| medio:
+14:19:32 | INFO    |      alta_card__id_escola                     0.40838
+14:19:32 | INFO    |      alta_card__id_municipio                  0.16628
+14:19:32 | INFO    |      num__mun_ctx_media_portugues             0.06959
+14:19:32 | INFO    |      num__peso_aluno                          0.06820
+14:19:32 | INFO    |      num__mun_gap_projetado                   0.03399
+14:19:32 | INFO    |      num__mun_ctx_taxa_alfabetizacao          0.03163
+14:19:32 | INFO    |      num__uf_ctx_media_portugues              0.02336
+14:19:32 | INFO    |      num__escola_n_alunos_avaliados           0.02169
+14:19:32 | INFO    |      cat__sigla_uf_RS                         0.02051
+14:19:32 | INFO    |      num__uf_ctx_taxa_alfabetizacao           0.01487
+14:19:32 | INFO    | ==========================================================================
+14:19:32 | INFO    | 6. PERSISTENCIA
+14:19:36 | INFO    |    pipeline completo (pre-processamento + modelo): pipeline_aluno.joblib
+14:19:36 | INFO    |    relatorio de metricas: metricas_aluno.json
+14:19:36 | INFO    | ==========================================================================
+14:19:36 | INFO    | RESUMO | hist_gradient_boosting | PR-AUC 0.5899 (aleatorio) vs 0.5456 (municipio novo) | prevalencia 0.4017

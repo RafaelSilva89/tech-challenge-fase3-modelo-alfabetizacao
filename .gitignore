@@ -1,0 +1,36 @@
+# ------------------------------------------------------------
+# O QUE FICA FORA — tudo aqui é regenerável a partir do que é versionado
+# ------------------------------------------------------------
+
+# Base analítica derivada (~31 MB), reconstruída por `bash run.sh base`
+# a partir da camada Gold embarcada em data/gold/
+data/processed/*.parquet
+!data/processed/*_amostra.parquet
+
+# Cache da API do IBGE, rebaixado automaticamente na primeira execução
+data/external/*
+!data/external/.gitkeep
+
+data/interim/*
+!data/interim/.gitkeep
+
+# Ambiente
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# ------------------------------------------------------------
+# O QUE ENTRA, e por quê
+# ------------------------------------------------------------
+# data/gold/     a camada Gold (~40 MB) é versionada de propósito: é ela que
+#                torna este projeto autossuficiente, sem depender do data lake
+#                da Fase 2. Ver data/gold/PROVENIENCIA.md.
+#
+# models/*.joblib  os pipelines treinados (3,7 MB) vêm prontos, para que o
+#                projeto possa ser inspecionado e usado sem esperar a hora de
+#                treino do modelo por aluno. São reproduzíveis: o notebook 02
+#                recarrega o artefato e confere a métrica do holdout com assert.
+#                Carregar exige as versões de `requirements.txt` — em especial
+#                scikit-learn 1.5.2, já que o formato do pickle muda entre
+#                versões da biblioteca.
