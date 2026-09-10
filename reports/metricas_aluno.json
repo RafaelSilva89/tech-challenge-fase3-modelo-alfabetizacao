@@ -1,25 +1,24 @@
 {
-  "modelo_escolhido": "hist_gradient_boosting",
+  "modelo_escolhido": "random_forest",
+  "origem": "notebooks/04_crisp_dm_alfabetizacao.ipynb",
   "hiperparametros": {
-    "categorical_features": "warn",
+    "bootstrap": true,
+    "ccp_alpha": 0.0,
     "class_weight": "balanced",
-    "early_stopping": "auto",
-    "interaction_cst": null,
-    "l2_regularization": 0.0,
-    "learning_rate": 0.03,
-    "loss": "log_loss",
-    "max_bins": 255,
-    "max_depth": null,
-    "max_features": 1.0,
-    "max_iter": 400,
-    "max_leaf_nodes": 31,
-    "min_samples_leaf": 20,
+    "criterion": "gini",
+    "max_depth": 14,
+    "max_features": "sqrt",
+    "max_leaf_nodes": null,
+    "max_samples": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 50,
+    "min_samples_split": 2,
+    "min_weight_fraction_leaf": 0.0,
     "monotonic_cst": null,
-    "n_iter_no_change": 10,
+    "n_estimators": 200,
+    "n_jobs": 2,
+    "oob_score": false,
     "random_state": 42,
-    "scoring": "loss",
-    "tol": 1e-07,
-    "validation_fraction": 0.1,
     "verbose": 0,
     "warm_start": false
   },
@@ -51,164 +50,210 @@
   ],
   "comparacao_familias": [
     {
-      "modelo": "hist_gradient_boosting",
-      "pr_auc_medio": 0.5651615206967299,
-      "desvio": 0.0024678233641269483,
-      "segundos": 60.90262317657471
-    },
-    {
-      "modelo": "lightgbm",
-      "pr_auc_medio": 0.5650617807050553,
-      "desvio": 0.0018579167109050493,
-      "segundos": 40.552780628204346
+      "modelo": "random_forest",
+      "pr_auc_medio": 0.5610435055585907,
+      "desvio": 0.0032374309896920257,
+      "segundos": 104.5800290107727
     },
     {
       "modelo": "regressao_logistica",
-      "pr_auc_medio": 0.5631918916666151,
-      "desvio": 0.0022217819236930152,
-      "segundos": 26.657339572906494
+      "pr_auc_medio": 0.5607463080605276,
+      "desvio": 0.0022902712946546314,
+      "segundos": 7.565392732620239
+    },
+    {
+      "modelo": "lightgbm",
+      "pr_auc_medio": 0.5496856934953619,
+      "desvio": 0.004016271207073387,
+      "segundos": 28.65024757385254
     },
     {
       "modelo": "baseline_maioria",
-      "pr_auc_medio": 0.40072,
-      "desvio": 0.0,
-      "segundos": 36.30167531967163
+      "pr_auc_medio": 0.40269999988054117,
+      "desvio": 8.447013139607868e-06,
+      "segundos": 11.93156886100769
+    }
+  ],
+  "comparacao_holdout": [
+    {
+      "modelo": "random_forest",
+      "pr_auc_teste": 0.57477440438517,
+      "roc_auc_teste": 0.6849670783186117,
+      "f1_teste": 0.5876110149137016,
+      "recall_teste": 0.6547582000373436,
+      "precisao_teste": 0.5329550635797153,
+      "acuracia_teste": 0.63085,
+      "brier_teste": 0.22370985909971536,
+      "pr_auc_treino": 0.6472570040110146,
+      "sobreajuste": 0.07248259962584458,
+      "ganho_sobre_acaso": 1.4309439332424723
+    },
+    {
+      "modelo": "lightgbm",
+      "pr_auc_teste": 0.5736721224533113,
+      "roc_auc_teste": 0.6846240090494603,
+      "f1_teste": 0.583506856510402,
+      "recall_teste": 0.6453185618555631,
+      "precisao_teste": 0.5325013267594543,
+      "acuracia_teste": 0.6299666666666667,
+      "brier_teste": 0.22356163612028365,
+      "pr_auc_treino": 0.696744878262883,
+      "sobreajuste": 0.12307275580957167,
+      "ganho_sobre_acaso": 1.4281997198065883
+    },
+    {
+      "modelo": "regressao_logistica",
+      "pr_auc_teste": 0.5713059852203616,
+      "roc_auc_teste": 0.6828272395254148,
+      "f1_teste": 0.5819850095342383,
+      "recall_teste": 0.6395303002012407,
+      "precisao_teste": 0.5339407271404569,
+      "acuracia_teste": 0.6309833333333333,
+      "brier_teste": 0.22458866111998033,
+      "pr_auc_treino": 0.6685714512120972,
+      "sobreajuste": 0.09726546599173558,
+      "ganho_sobre_acaso": 1.4223090439294495
     }
   ],
   "holdout_aleatorio": {
-    "roc_auc": 0.6985763039903957,
-    "pr_auc": 0.5899228101857081,
-    "f1": 0.5982205615774481,
-    "recall_nao_alfabetizado": 0.6709611833779382,
-    "brier": 0.22011175948518308,
+    "roc_auc": 0.6970155898210497,
+    "pr_auc": 0.5881402562088913,
+    "f1": 0.597190303210023,
+    "recall_nao_alfabetizado": 0.6684923549303956,
+    "brier": 0.2204475865868364,
     "prevalencia": 0.401675,
     "n": 120000,
-    "limiar_otimo_f1": 0.3865090171485696,
-    "f1_no_limiar_otimo": 0.6190100131124091
+    "limiar_otimo_f1": 0.4079419428095463,
+    "f1_no_limiar_otimo": 0.6178890492125381
   },
   "holdout_por_municipio": {
-    "roc_auc": 0.669811666065625,
-    "pr_auc": 0.5455987755012854,
-    "f1": 0.5567136950762264,
-    "recall_nao_alfabetizado": 0.6006844843617084,
-    "brier": 0.23469015322482448,
+    "roc_auc": 0.6724922218661367,
+    "pr_auc": 0.5475488538676958,
+    "f1": 0.5840494646557204,
+    "recall_nao_alfabetizado": 0.6998160200993095,
+    "brier": 0.23261053507258816,
     "prevalencia": 0.391237045579437,
     "n": 129203
   },
   "teste_anti_leakage_com_proficiencia": {
-    "roc_auc": 0.9999930940495653,
-    "pr_auc": 0.9999897478999494,
-    "f1": 0.9979765697149557,
-    "recall_nao_alfabetizado": 0.9976556502977116,
-    "brier": 0.0010176255370642011,
-    "prevalencia": 0.401675,
-    "n": 120000
+    "roc_auc": 0.9999921350156773,
+    "pr_auc": 0.9999882796135291,
+    "f1": 0.9979096157674696,
+    "recall_nao_alfabetizado": 0.9986551775663695,
+    "brier": 0.0013746979678405703,
+    "prevalencia": 0.40154,
+    "n": 50000
   },
   "matriz_confusao": [
     [
-      44217,
-      27582
+      44310,
+      27489
     ],
     [
-      15860,
-      32341
+      15979,
+      32222
     ]
   ],
+  "limiar_custo_minimo": {
+    "limiar": 0.25999999999999995,
+    "custo_fn": 5.0,
+    "custo_fp": 1.0
+  },
   "top_features_permutacao": [
     {
       "feature": "id_escola",
-      "queda_pr_auc": 0.07234429290170241,
-      "desvio": 0.0031082709203603125
+      "queda_pr_auc": 0.04069690010427725,
+      "desvio": 0.0019929321994384456
     },
     {
       "feature": "id_municipio",
-      "queda_pr_auc": 0.012953259580764164,
-      "desvio": 0.001844768057582804
+      "queda_pr_auc": 0.008424996833239695,
+      "desvio": 0.0016414888173270359
     },
     {
       "feature": "mun_ctx_media_portugues",
-      "queda_pr_auc": 0.002653381722922843,
-      "desvio": 0.0009684732929626584
-    },
-    {
-      "feature": "sigla_uf",
-      "queda_pr_auc": 0.0020549560670670487,
-      "desvio": 0.00023482176017286158
+      "queda_pr_auc": 0.0025324276401287316,
+      "desvio": 0.0013883826147965072
     },
     {
       "feature": "mun_ctx_taxa_alfabetizacao",
-      "queda_pr_auc": 0.0019543672982579975,
-      "desvio": 0.0008050460477313792
-    },
-    {
-      "feature": "uf_ctx_media_portugues",
-      "queda_pr_auc": 0.001359397458554179,
-      "desvio": 0.0007385427726977438
-    },
-    {
-      "feature": "escola_n_alunos_avaliados",
-      "queda_pr_auc": 0.0012714628973706787,
-      "desvio": 0.00020535311986691644
+      "queda_pr_auc": 0.0017507139151898166,
+      "desvio": 0.001268828625700453
     },
     {
       "feature": "peso_aluno",
-      "queda_pr_auc": 0.0010700079918603,
-      "desvio": 0.00024160753427377574
+      "queda_pr_auc": 0.0009368946227923391,
+      "desvio": 0.00024722441837335087
     },
     {
-      "feature": "ibge_densidade_demografica",
-      "queda_pr_auc": 0.0008515000388612081,
-      "desvio": 0.00017611441618442723
-    },
-    {
-      "feature": "ibge_pib_per_capita",
-      "queda_pr_auc": 0.0007691076441986855,
-      "desvio": 0.0003742072820858736
-    },
-    {
-      "feature": "uf_ctx_taxa_alfabetizacao",
-      "queda_pr_auc": 0.0007673631985928742,
-      "desvio": 0.0002636398869962006
-    },
-    {
-      "feature": "caderno",
-      "queda_pr_auc": 0.0005536140351067642,
-      "desvio": 0.0002462758542365363
-    },
-    {
-      "feature": "ibge_populacao",
-      "queda_pr_auc": 0.0003592129774231623,
-      "desvio": 0.000232897868323132
+      "feature": "uf_ctx_media_portugues",
+      "queda_pr_auc": 0.000643837178438722,
+      "desvio": 0.0008757377231028551
     },
     {
       "feature": "mun_gap_projetado",
-      "queda_pr_auc": 0.00029743984116699097,
-      "desvio": 0.0002572280519689693
+      "queda_pr_auc": 0.0005381868489311437,
+      "desvio": 0.0007813195864631538
+    },
+    {
+      "feature": "mun_meta_2024",
+      "queda_pr_auc": 0.00047331419166642965,
+      "desvio": 0.0005513436355779417
     },
     {
       "feature": "regiao",
-      "queda_pr_auc": 0.0001606599641643447,
-      "desvio": 0.00021485193060047388
+      "queda_pr_auc": 0.00043473336079304927,
+      "desvio": 0.00027289669493537835
     },
     {
-      "feature": "mun_n_escolas",
-      "queda_pr_auc": 9.849126982408585e-05,
-      "desvio": 0.0001329438240795919
+      "feature": "ibge_pib_per_capita",
+      "queda_pr_auc": 0.00043198106440400785,
+      "desvio": 0.00024333012440249204
     },
     {
-      "feature": "mun_n_alunos_avaliados",
-      "queda_pr_auc": 6.98011186858194e-05,
-      "desvio": 0.0002850995081652093
+      "feature": "escola_n_alunos_avaliados",
+      "queda_pr_auc": 0.0002698936828217091,
+      "desvio": 0.00036991625447661646
+    },
+    {
+      "feature": "uf_ctx_taxa_alfabetizacao",
+      "queda_pr_auc": 0.00024766051905242834,
+      "desvio": 0.0006163393640918531
+    },
+    {
+      "feature": "sigla_uf",
+      "queda_pr_auc": 0.0001826015708443096,
+      "desvio": 0.0004368219928044822
+    },
+    {
+      "feature": "caderno",
+      "queda_pr_auc": 0.00014186838308871685,
+      "desvio": 6.826261489729133e-05
+    },
+    {
+      "feature": "ibge_populacao",
+      "queda_pr_auc": 9.996660789861611e-05,
+      "desvio": 0.0002049480950196272
     },
     {
       "feature": "ibge_log_populacao",
-      "queda_pr_auc": 6.668517277508279e-06,
-      "desvio": 7.916310666709826e-06
+      "queda_pr_auc": 9.653373848226288e-05,
+      "desvio": 0.0002377671755511206
     },
     {
       "feature": "uf_ctx_ranking_nacional",
-      "queda_pr_auc": 4.597528361660608e-06,
-      "desvio": 1.7677566598166887e-05
+      "queda_pr_auc": 6.032798816459906e-05,
+      "desvio": 0.0004927470746381956
+    },
+    {
+      "feature": "mun_n_alunos_avaliados",
+      "queda_pr_auc": 2.1060635179637188e-05,
+      "desvio": 0.00022227897628649068
+    },
+    {
+      "feature": "ibge_densidade_demografica",
+      "queda_pr_auc": 1.2582550367401524e-05,
+      "desvio": 0.00037717350138259003
     },
     {
       "feature": "serie",
