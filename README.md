@@ -481,7 +481,10 @@ Tech_Challenge_Fase_3/
 ├── notebooks/
 │   ├── 01_eda.ipynb                análise exploratória e hipóteses
 │   ├── 02_modelagem_aluno.ipynb    auditoria do modelo por aluno
-│   └── 03_risco_municipal.ipynb    priorização e perguntas de negócio
+│   ├── 03_risco_municipal.ipynb    priorização e perguntas de negócio
+│   └── 04_crisp_dm_alfabetizacao.ipynb
+│                                   o ciclo CRISP-DM inteiro num arquivo só:
+│                                   EDA, três algoritmos e a publicação do campeão
 ├── src/
 │   ├── config.py                   caminhos, semente, contrato de colunas e vetos
 │   ├── data/       verifica_premissas · build_gold · verifica_camada · build_base · ibge
