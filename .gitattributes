@@ -1,9 +1,7 @@
 * text=auto
 
-# Dados e imagens nunca passam por conversão de fim de linha
+# Dados, imagens e modelos nunca passam por conversão de fim de linha
 *.parquet binary
 *.png binary
 *.pdf binary
-
-# Scripts executados no WSL/Linux precisam de LF — CRLF quebra o shebang
-*.sh text eol=lf
+*.joblib binary
