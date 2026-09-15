@@ -29,7 +29,7 @@ Base dos Dados (BigQuery)
         ├──▶ gold_alfabetizacao_uf          ─┤ copiadas para cá
         │                                    │
         ▼                                    │
-  Fase 3 — src/data/build_gold.py            │
+  Fase 3 — extensão da Gold (grão de aluno)  │
         ├──▶ gold_aluno_analitico           ─┤
         └──▶ gold_metas_municipio           ─┘
 ```
@@ -58,17 +58,12 @@ A Gold da Fase 2 não preservava o que a modelagem desta fase exige:
 eventos de streaming da Fase 2, que são sintéticos e serviam para demonstrar a pipeline) e
 `alfabetizado_flag` não nulo (aluno ausente da avaliação não tem alvo).
 
-## Como regenerar
+## Como os arquivos são usados
 
-Estes arquivos são reproduzíveis a partir do data lake da Fase 2:
-
-```bash
-export FASE3_DATA_LAKE=/caminho/para/Tech_Challenge/data_lake
-bash run.sh gold
-```
-
-Sem essa variável, `run.sh gold` se autopula — o que é o comportamento normal, já que a Gold
-está aqui e é ela que a modelagem lê.
+A Gold está pronta neste diretório e é a única fonte lida pela modelagem. A partir dela,
+`python -m src.preprocessing.build_base` gera a base analítica completa, a amostra versionada
+e a base municipal em `data/processed/`. A regeneração da própria Gold dependia do data lake
+da Fase 2, que não faz parte deste repositório.
 
 Cada arquivo carrega a coluna `_gold_processed_at` com o instante da geração.
 
@@ -78,4 +73,4 @@ O **Rio Grande do Sul** apresenta queda de 19,6 pontos percentuais entre 2023 e 
 uniforme entre as redes estadual e municipal e com cobertura estável. É a única UF com queda
 expressiva — a pior das outras 23 é o Paraná, com −1,8 pp. Recomenda-se confirmar com o INEP
 se houve mudança de instrumento ou de aplicação antes de embasar decisão nesses números.
-Detalhes na seção 6.1 do `notebooks/01_eda.ipynb`.
+O efeito aparece em várias análises do `notebooks/projeto_alfabetizacao.ipynb` (limpeza, calibração e risco municipal).

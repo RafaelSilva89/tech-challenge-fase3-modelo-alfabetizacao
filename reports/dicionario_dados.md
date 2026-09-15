@@ -1,6 +1,6 @@
 # Dicionário de dados — base analítica da Fase 3
 
-Gerado por `src/data/build_base.py` a partir da **camada Gold embarcada** em `data/gold/`,
+Gerado por `src/preprocessing/build_base.py` a partir da **camada Gold embarcada** em `data/gold/`,
 com enriquecimento pela API de agregados do IBGE.
 
 ## Camada de origem
@@ -10,9 +10,9 @@ torna autossuficiente:
 
 | Visão Gold | Grão | Linhas | Origem |
 |---|---|---|---|
-| `gold_aluno_analitico` | (ano, id_aluno) | 3.354.661 | **Fase 3** — `src/data/build_gold.py` |
+| `gold_aluno_analitico` | (ano, id_aluno) | 3.354.661 | **Fase 3** |
 | `gold_alfabetizacao_municipio` | (ano, município, rede) | 23.995 | Fase 2 |
-| `gold_metas_municipio` | (município, rede) | 12.650 | **Fase 3** — `src/data/build_gold.py` |
+| `gold_metas_municipio` | (município, rede) | 12.650 | **Fase 3** |
 | `gold_alfabetizacao_uf` | (ano, UF) | 49 | Fase 2 |
 
 As duas da Fase 3 cobrem lacunas da Gold anterior: o **grão de aluno** (lá a visão de alunos
@@ -22,7 +22,6 @@ anti-vazamento). A Fase 3 estende a camada; não altera nada do que a Fase 2 ent
 
 Cadeia de proveniência completa: [`../data/gold/PROVENIENCIA.md`](../data/gold/PROVENIENCIA.md).
 
-`bash run.sh camada` falha se algum módulo de modelagem voltar a ler a Silver.
 
 ### `gold_aluno_analitico`
 
