@@ -1,6 +1,6 @@
-"""Configuração central da Fase 3 — caminhos, semente e contrato de colunas.
+"""Configuração central do projeto — caminhos, semente e contrato de colunas.
 
-Tudo o que decide *o que entra no modelo* mora aqui, para que notebooks e scripts
+Tudo o que decide *o que entra no modelo* mora aqui, para que o notebook e os scripts
 compartilhem exatamente a mesma definição e a política anti-leakage seja auditável
 num único lugar.
 """
@@ -8,7 +8,6 @@ num único lugar.
 from __future__ import annotations
 
 import logging
-import os
 from pathlib import Path
 
 # ============================================================
@@ -25,11 +24,9 @@ DATA_DIR = PROJ_DIR / "data"
 # este projeto roda sozinho: não depende do data lake da Fase 2 estar por perto.
 #
 # `gold_alfabetizacao_municipio` e `gold_alfabetizacao_uf` vieram prontas da Fase 2.
-# `gold_aluno_analitico` e `gold_metas_municipio` são publicadas por
-# `src/data/build_gold.py`, porque a Gold da Fase 2 não preservava o que esta fase
-# precisa: o grão de aluno (a visão de alunos de lá é agregada por município/rede)
-# e as metas 2024-2030 (a Gold municipal só guarda a meta do ano corrente, nula em
-# 2023 — justamente o ano de contexto do desenho anti-vazamento).
+# `gold_aluno_analitico` e `gold_metas_municipio` foram publicadas na Fase 3, porque
+# a Gold da Fase 2 não preservava o que esta fase precisa: o grão de aluno e as metas
+# 2024-2030.
 #
 # Proveniência dos arquivos: ver data/gold/PROVENIENCIA.md
 
@@ -40,60 +37,34 @@ GOLD_ALUNO = f"{GOLD_DIR}/gold_aluno_analitico/*/*.parquet"
 GOLD_METAS = f"{GOLD_DIR}/gold_metas_municipio/*.parquet"
 
 # ------------------------------------------------------------
-# CAMADA SILVER — opcional, só para regenerar a Gold
-# ------------------------------------------------------------
-# A Silver não vem embarcada (são 56 MB que só servem para reproduzir a Gold, que
-# já está pronta). Quem tiver o data lake da Fase 2 pode apontá-lo por
-# FASE3_DATA_LAKE e rodar `run.sh gold` para regenerar tudo da origem.
-# Sem ele, `build_gold.py` e `verifica_premissas.py` se autopulam.
-
-DATA_LAKE = Path(os.getenv("FASE3_DATA_LAKE", PROJ_DIR.parent / "data_lake"))
-SILVER_ALUNOS = f"{DATA_LAKE}/silver/alunos/*.parquet"
-SILVER_INDICADORES = f"{DATA_LAKE}/silver/indicadores_municipio_integrado.parquet"
-
-# ------------------------------------------------------------
 # DEMAIS DIRETÓRIOS DO PROJETO
 # ------------------------------------------------------------
 
 EXTERNAL_DIR = DATA_DIR / "external"
-INTERIM_DIR = DATA_DIR / "interim"
 PROCESSED_DIR = DATA_DIR / "processed"
 MODELS_DIR = PROJ_DIR / "models"
 REPORTS_DIR = PROJ_DIR / "reports"
-IMAGES_DIR = REPORTS_DIR / "images"
+IMAGES_DIR = PROJ_DIR / "images"
 
 BASE_ALUNOS = PROCESSED_DIR / "base_analitica_alunos.parquet"
 BASE_ALUNOS_AMOSTRA = PROCESSED_DIR / "base_analitica_alunos_amostra.parquet"
 BASE_MUNICIPAL = PROCESSED_DIR / "base_municipal.parquet"
 
-for _d in (EXTERNAL_DIR, INTERIM_DIR, PROCESSED_DIR, MODELS_DIR, REPORTS_DIR, IMAGES_DIR):
+for _d in (EXTERNAL_DIR, PROCESSED_DIR, MODELS_DIR, REPORTS_DIR, IMAGES_DIR):
     _d.mkdir(parents=True, exist_ok=True)
-
-
-def silver_disponivel() -> bool:
-    """A Silver da Fase 2 está acessível?
-
-    Decide se `build_gold.py` e `verifica_premissas.py` podem rodar. Num clone limpo
-    a resposta é não — e está tudo bem: a Gold já vem embarcada em `data/gold/`, e
-    essas duas etapas só existem para regenerá-la a partir da origem.
-    """
-    return (DATA_LAKE / "silver" / "alunos").is_dir()
 
 # ============================================================
 # REPRODUTIBILIDADE E RECURSOS
 # ============================================================
 
 SEED = 42
-N_JOBS = 2                  # o WSL desta máquina expõe 2 vCPUs
-AMOSTRA_SHAP = 20_000       # linhas explicadas pelo SHAP
+N_JOBS = 2                  # núcleos usados pela validação cruzada do modelo municipal
 AMOSTRA_VERSIONADA = 50_000 # linhas da amostra que vai para o Git
 
 # Toda amostragem do projeto sai de `hash(id_aluno || SEED)`, nunca de `USING
 # SAMPLE`: o sampling do DuckDB não é determinístico sob leitura paralela — duas
 # chamadas com a mesma semente devolveram amostras com 22% de sobreposição, o que
-# tornava o holdout irreproduzível mesmo com o scikit-learn corretamente semeado.
-# O número de linhas de treino fica em `src.models.train_aluno.N_CARGA`, ajustável
-# por FASE3_N_CARGA para quem tiver mais memória que os ~3 GB deste WSL.
+# tornaria os resultados irreproduzíveis mesmo com o scikit-learn corretamente semeado.
 
 # ============================================================
 # RECORTE TEMPORAL
@@ -158,7 +129,7 @@ CAT_BAIXA = ["rede", "serie", "caderno", "regiao", "sigla_uf"]
 # Alta cardinalidade -> TargetEncoder (cross-fitting interno do scikit-learn)
 CAT_ALTA = ["id_municipio", "id_escola"]
 
-# Numéricas -> imputação por mediana (+ escala apenas no baseline linear)
+# Numéricas -> imputação por mediana (+ escala apenas no modelo linear)
 NUM_FEATURES = [
     # avaliação do aluno
     "peso_aluno",

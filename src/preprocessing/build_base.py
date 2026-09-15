@@ -1,10 +1,12 @@
 """Constrói a base analítica da Fase 3 lendo exclusivamente a camada Gold.
 
 Quatro visões Gold alimentam esta base — duas herdadas da Fase 2
-(`gold_alfabetizacao_municipio`, `gold_alfabetizacao_uf`) e duas publicadas por
-`src/data/build_gold.py` (`gold_aluno_analitico`, `gold_metas_municipio`), que
-cobrem o que a Gold da Fase 2 não preservava: o grão de aluno e as metas de 2023.
-Rode `bash run.sh gold` antes deste script.
+(`gold_alfabetizacao_municipio`, `gold_alfabetizacao_uf`) e duas publicadas na
+Fase 3 (`gold_aluno_analitico`, `gold_metas_municipio`), que cobrem o que a Gold da
+Fase 2 não preservava: o grão de aluno e as metas de 2023. Todas já vêm prontas em
+`data/gold/`.
+
+Execução: `python -m src.preprocessing.build_base` (a partir da raiz do projeto).
 
 Grão de saída: um aluno avaliado em ANO_ALVO (2024). O alvo é `nao_alfabetizado`
 (1 = não atingiu os 743 pontos do Indicador Criança Alfabetizada).
@@ -16,8 +18,8 @@ português, distribuição de níveis) é uma função do próprio alvo — usá
 métrica excelente e um modelo inútil. A defasagem elimina esse vazamento e ainda
 espelha o uso real: em janeiro de 2025 o gestor só dispõe dos números de 2023/2024.
 
-O processamento é feito em DuckDB lendo os Parquet direto do data lake, porque o
-ambiente WSL desta máquina tem ~3 GB de RAM e a Gold de alunos tem 3,3 M linhas.
+O processamento é feito em DuckDB lendo os Parquet direto de `data/gold/`, porque a
+Gold de alunos tem 3,3 M linhas e o DuckDB não precisa carregá-las inteiras na memória.
 
 Saídas em data/processed/:
   · base_analitica_alunos.parquet          base completa (fora do Git)
@@ -34,12 +36,12 @@ from src.config import (
     ANO_ALVO, ANO_CONTEXTO, AMOSTRA_VERSIONADA, BASE_ALUNOS, BASE_ALUNOS_AMOSTRA,
     BASE_MUNICIPAL, GOLD_ALUNO, GOLD_METAS, GOLD_MUNICIPIO, GOLD_UF, SEED, get_logger,
 )
-from src.data.ibge import carrega_indicadores
+from src.preprocessing.ibge import carrega_indicadores
 
 log = get_logger("build_base")
 
 # Todas as fontes são da camada Gold. `gold_aluno_analitico` e `gold_metas_municipio`
-# são publicadas por `src/data/build_gold.py` — rode `bash run.sh gold` antes daqui.
+# foram publicadas na Fase 3 e já vêm prontas em `data/gold/`.
 # O recorte de origem ('batch') e de alvo não nulo já foi aplicado ao publicar a Gold,
 # então aqui basta filtrar o ano.
 FILTRO_FATO = f"ano = {ANO_ALVO}"

@@ -53,8 +53,7 @@ def carrega_base(n_linhas: int | None = None, com_proficiencia: bool = False) ->
     reservoir sampling do DuckDB **não é determinístico** com leitura paralela —
     duas chamadas com a mesma semente devolvem conjuntos diferentes (medido: 22% de
     sobreposição). Ordenar por um hash do identificador dá a mesma amostra sempre,
-    que é o que permite ao notebook 02 recarregar o modelo salvo e reproduzir a
-    métrica do holdout exatamente.
+    o que torna os resultados reproduzíveis.
     """
     colunas = ", ".join(COLUNAS_CARGA)
     limite = f"ORDER BY hash(id_aluno || '{SEED}') LIMIT {n_linhas}" if n_linhas else ""

@@ -83,10 +83,10 @@ def limpa_eixos(ax, manter_x: bool = True) -> None:
 
 
 def salva(fig, nome: str) -> str:
-    """Grava em reports/images e devolve o caminho relativo, para citar no README."""
+    """Grava em images/ e devolve o caminho relativo, para citar no README."""
     caminho = IMAGES_DIR / nome
     fig.savefig(caminho)
-    return f"reports/images/{nome}"
+    return f"images/{nome}"
 
 
 def barras_horizontais(ax, rotulos, valores, cor=AZUL, formato="{:.1f}",
