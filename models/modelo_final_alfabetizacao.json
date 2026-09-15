@@ -1,0 +1,57 @@
+{
+  "modelo": "LightGBM ajustado (Pipeline: pré-processamento + LGBMClassifier)",
+  "arquivo": "modelo_final_alfabetizacao.joblib",
+  "data_treino": "2026-09-14 22:13",
+  "treinado_com": "40,135 crianças (treino + validação)",
+  "colunas_de_entrada": [
+    "peso_aluno",
+    "mun_ctx_taxa_alfabetizacao",
+    "mun_ctx_media_portugues",
+    "mun_meta_2024",
+    "mun_gap_projetado",
+    "uf_ctx_taxa_alfabetizacao",
+    "uf_ctx_media_portugues",
+    "uf_ctx_ranking_nacional",
+    "escola_n_alunos_avaliados",
+    "mun_n_alunos_avaliados",
+    "mun_n_escolas",
+    "ibge_populacao",
+    "ibge_pib_per_capita",
+    "ibge_densidade_demografica",
+    "ibge_log_populacao",
+    "rede",
+    "serie",
+    "caderno",
+    "regiao",
+    "sigla_uf",
+    "id_municipio",
+    "id_escola"
+  ],
+  "alvo": "nao_alfabetizado (1 = não alfabetizado)",
+  "limiar_recomendado": 0.5,
+  "limiar_alternativo": 0.37,
+  "metricas_no_teste": {
+    "Acurácia": 0.6154,
+    "Precisão": 0.5156,
+    "Recall (Sensibilidade)": 0.6229,
+    "F1-Score": 0.5642,
+    "AUC-ROC": 0.6666,
+    "PR-AUC": 0.5515
+  },
+  "hiperparametros": {
+    "colsample_bytree": 0.6,
+    "learning_rate": 0.01,
+    "max_depth": 3,
+    "min_child_samples": 36,
+    "n_estimators": 545,
+    "num_leaves": 91,
+    "reg_alpha": 0,
+    "reg_lambda": 0.5,
+    "scale_pos_weight": 1.5026,
+    "subsample": 0.7
+  },
+  "avisos": [
+    "Use a probabilidade como ORDEM de prioridade, não como chance exata (o modelo superestima o risco em ~9 p.p.).",
+    "Não use 'proficiencia' como entrada: ela é a própria resposta (vazamento)."
+  ]
+}
